@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A07F329C1E3C0FC600079E2A /* MorseTransmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */; };
 		A0CCDF9B1E30EC73009C6300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCDF9A1E30EC73009C6300 /* AppDelegate.swift */; };
 		A0CCDF9D1E30EC73009C6300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCDF9C1E30EC73009C6300 /* ViewController.swift */; };
 		A0CCDFA01E30EC73009C6300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0CCDF9E1E30EC73009C6300 /* Main.storyboard */; };
 		A0CCDFA21E30EC73009C6300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0CCDFA11E30EC73009C6300 /* Assets.xcassets */; };
 		A0CCDFA51E30EC73009C6300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0CCDFA31E30EC73009C6300 /* LaunchScreen.storyboard */; };
+		A0E44A481E395DE400C34063 /* NSLayoutConstraintExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E44A471E395DE400C34063 /* NSLayoutConstraintExt.swift */; };
+		A0E44A4A1E39F19000C34063 /* MorseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E44A491E39F19000C34063 /* MorseController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MorseTransmitter.swift; sourceTree = "<group>"; };
 		A0CCDF971E30EC73009C6300 /* Morse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CCDF9A1E30EC73009C6300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0CCDF9C1E30EC73009C6300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +26,8 @@
 		A0CCDFA11E30EC73009C6300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0CCDFA41E30EC73009C6300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0CCDFA61E30EC73009C6300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0E44A471E395DE400C34063 /* NSLayoutConstraintExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExt.swift; sourceTree = "<group>"; };
+		A0E44A491E39F19000C34063 /* MorseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MorseController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,9 @@
 		A0CCDF991E30EC73009C6300 /* Morse */ = {
 			isa = PBXGroup;
 			children = (
+				A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */,
+				A0E44A491E39F19000C34063 /* MorseController.swift */,
+				A0E44A471E395DE400C34063 /* NSLayoutConstraintExt.swift */,
 				A0CCDF9A1E30EC73009C6300 /* AppDelegate.swift */,
 				A0CCDF9C1E30EC73009C6300 /* ViewController.swift */,
 				A0CCDF9E1E30EC73009C6300 /* Main.storyboard */,
@@ -138,7 +147,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0CCDF9D1E30EC73009C6300 /* ViewController.swift in Sources */,
+				A07F329C1E3C0FC600079E2A /* MorseTransmitter.swift in Sources */,
 				A0CCDF9B1E30EC73009C6300 /* AppDelegate.swift in Sources */,
+				A0E44A4A1E39F19000C34063 /* MorseController.swift in Sources */,
+				A0E44A481E395DE400C34063 /* NSLayoutConstraintExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +312,7 @@
 				A0CCDFAB1E30EC73009C6300 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
