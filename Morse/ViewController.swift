@@ -130,18 +130,16 @@ class ViewController: UIViewController {
     
     private func transmit() {
         state = .transmitting
+        
         UIView.animate(withDuration: 0.5, animations: {
-            self.view.alpha = 0.3
+            self.view.alpha = 0.7
         }, completion: { _ in
             self.plainTextView.isUserInteractionEnabled = false
             self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
             
             self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse, remainingDuration) in
                 self?.timeLabel.text = self?.stringForTransmitDuration(remainingDuration)
-                UIView.animate(withDuration: 0.1) {
-                    self?.view.alpha = morse ? 1 : 0.3
-                    self?.toggleTorch(morse)
-                }
+                self?.toggleTorch(morse)
                 }, reset: { [weak self] in
                     self?.state = .text
                     self?.toggleTorch(false)
