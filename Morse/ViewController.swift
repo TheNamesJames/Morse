@@ -101,6 +101,10 @@ class ViewController: UIViewController {
     @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
         morseTransmitterInvalidatorBlock?()
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 
 extension ViewController: UITextFieldDelegate {
