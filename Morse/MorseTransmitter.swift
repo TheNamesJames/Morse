@@ -9,7 +9,7 @@
 import Foundation
 
 class MorseTransmitter {
-    static let signalDuration: Double = 0.25
+    static let pulseDuration: Double = 0.25
     
     typealias SignalBlock = (Bool) -> Void
     
@@ -29,7 +29,7 @@ class MorseTransmitter {
     class func transmit(_ pulses: [Bool], block: @escaping SignalBlock, reset: @escaping () -> Void) -> TimerInvalidatorBlock {
         var remaining = pulses
         
-        let timer = Timer.scheduledTimer(withTimeInterval: signalDuration, repeats: true) { (timer) in
+        let timer = Timer.scheduledTimer(withTimeInterval: pulseDuration, repeats: true) { (timer) in
             guard let pulse = remaining.first else {
                 reset()
                 timer.invalidate()
@@ -56,8 +56,12 @@ class MorseTransmitter {
         return (isValidBlock, cancelBlock)
     }
     
-    class func signalDuration(for morse: [[Morse]]) -> Double {
-        return Double(convert(from: morse).count) * signalDuration
+    class func transmitDuration(for morse: [[Morse]]) -> Double {
+        return transmitDuration(for: convert(from: morse))
+    }
+    
+    class func transmitDuration(for pulses: [Bool]) -> Double {
+        return Double(pulses.count) * pulseDuration
     }
     
     /// Converts morse code into on/off pulses

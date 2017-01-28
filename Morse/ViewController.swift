@@ -226,8 +226,7 @@ extension ViewController: UITextViewDelegate {
         morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse))
         morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height
         
-        // FIXME: calc actual time (in MorseController) w/ delays between dots/dashes
-        timeLabel.text = String(MorseTransmitter.signalDuration(for: morse)) + "s"
+        timeLabel.text = String(Int(MorseTransmitter.transmitDuration(for: morse))) + "s"
     }
     
     private func morseCodeAttributedText(_ string: String) -> NSAttributedString {
