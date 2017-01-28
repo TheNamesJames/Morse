@@ -63,6 +63,8 @@ class ViewController: UIViewController {
         
         morseScroll.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
         plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
+        
+        textViewDidChange(plainTextView)
     }
     
     deinit {
