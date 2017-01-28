@@ -19,8 +19,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
     @IBOutlet weak var morseLabelPreferredHeight: NSLayoutConstraint!
-    fileprivate var hasActualText = false
+    fileprivate var state: State = .empty {
+        didSet {
+            switch state {
+            case .text, .empty:
+                transmitLabel.text = "TRANSMIT"
+                transmitLabel.textColor = UIColor.white.withAlphaComponent(state == .text ? 1 : 0.6)
+            case .transmitting:
+                transmitLabel.textColor = UIColor.white
+                transmitLabel.text = "TRANSMITTING. TAP TO CANCEL"
+            }
+        }
+    }
     
+    enum State {
+        case empty
+        case text
+        case transmitting
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,13 +81,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func transmitTapped(_ sender: UIView) {
+        switch state {
+        case .empty:
+            break
+        case .text:
+            transmit()
+        case .transmitting:
+            if morseTransmitterInvalidatorBlock?.isTransmitting() == true {
+                morseTransmitterInvalidatorBlock?.cancel()
+            }
+        }
+    }
+    
+    private func transmit() {
+        state = .transmitting
         UIView.animate(withDuration: 0.5, animations: {
             self.view.alpha = 0.3
         }, completion: { _ in
             self.plainTextView.isUserInteractionEnabled = false
             self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
             self.morseLabel.isUserInteractionEnabled = false
-            self.transmitLabel.textColor = UIColor.white.withAlphaComponent(0.6)
             
             self.morseTransmitterInvalidatorBlock = MorseController.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse) in
                 UIView.animate(withDuration: 0.1) {
@@ -79,6 +108,7 @@ class ViewController: UIViewController {
                     self?.toggleTorch(morse)
                 }
                 }, reset: { [weak self] in
+                    self?.state = .text
                     self?.toggleTorch(false)
                     
                     UIView.animate(withDuration: 1, animations: {
@@ -88,7 +118,6 @@ class ViewController: UIViewController {
                         self?.plainTextView.isUserInteractionEnabled = true
                         self?.plainTextView.textColor = UIColor.white
                         self?.morseLabel.isUserInteractionEnabled = true
-                        self?.transmitLabel.textColor = UIColor.white
                     })
             })
         })
@@ -118,33 +147,49 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let replacedString = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text) as String
-        let valid = MorseController.validate(replacedString).isValid
-        
-        if !valid {
+        guard !CharacterSet.newlines.contains(text.unicodeScalars.first ?? UnicodeScalar(UInt8())) else {
+            return false // If first character is newline, ignore (prevents auto capitalisation)
         }
         
-        return valid
+        switch state {
+        case .empty:
+            guard !text.isEmpty else {
+                return false
+            }
+            guard MorseController.validate(text).isValid else {
                 shakeTextView()
+                return false
+            }
+            textView.text = text
+            state = .text
+            textViewDidChange(textView)
+            return false
+        case .transmitting:
+            return false
+        case .text:
+            guard MorseController.validate(text).isValid else {
+                shakeTextView()
+                return false
+            }
+            return true
+        }
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if !hasActualText {
-            textView.text = nil
-        }
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return false
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        guard let text = textView.text, !text.isEmpty else {
-//            textView.text = "Enter message..."
-//            textView.textColor = UIColor.white.withAlphaComponent(0.6)
+        guard state == .text, let text = textView.text, !text.isEmpty else {
+            state = .empty
+            
             morseLabel.text = nil
             morseLabelPreferredHeight.constant = 0
             timeLabel.text = nil
-            transmitLabel.text = "TRANSMIT"
-            transmitLabel.textColor = UIColor.white.withAlphaComponent(0.6)
             return
         }
+        
+        state = .text
         
         let morse = MorseController.morse(from: text)!
         morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse), large: false)
@@ -152,8 +197,6 @@ extension ViewController: UITextViewDelegate {
         
         // FIXME: calc actual time (in MorseController) w/ delays between dots/dashes
         timeLabel.text = String(morse.flatMap { $0 }.map { $0.time }.reduce(0) { $0.0 + $0.1 })
-        transmitLabel.text = "TRANSMIT"
-        transmitLabel.textColor = UIColor.white
     }
     
     private func morseCodeAttributedText(_ string: String, large: Bool) -> NSAttributedString {

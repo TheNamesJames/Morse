@@ -77,7 +77,7 @@ class MorseController {
     
     static let inputLimit = 120
     
-    typealias TimerInvalidatorBlock = () -> Void
+    typealias TimerInvalidatorBlock = (isTransmitting: () -> Bool, cancel: () -> Void)
     
     enum Morse: Character {
         case dot = "•"
@@ -170,9 +170,16 @@ class MorseController {
             }
         }
         
-        return {
-            reset()
-            timer.invalidate()
+        let isValidBlock: () -> Bool = { [weak timer] in
+            timer?.isValid ?? false
         }
+        let cancelBlock: () -> Void = { [weak timer, isValidBlock] in
+            guard isValidBlock() else {
+                return
+            }
+            reset()
+            timer?.invalidate()
+        }
+        return (isValidBlock, cancelBlock)
     }
 }
