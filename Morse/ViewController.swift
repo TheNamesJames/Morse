@@ -21,8 +21,22 @@ class ViewController: UIViewController {
     private var faderLayer: CAGradientLayer!
     @IBOutlet weak var transmitLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var flashImageView: UIImageView!
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
     @IBOutlet weak var morseLabelPreferredHeight: NSLayoutConstraint!
+    fileprivate var useFlash: Bool! {
+        didSet {
+            guard canUseTorch() else {
+                flashImageView.image = #imageLiteral(resourceName: "Flash Off").withRenderingMode(.alwaysTemplate)
+                flashImageView.tintColor = UIColor.white.withAlphaComponent(0.3)
+                useFlash = false
+                return
+            }
+            
+            flashImageView.image = (useFlash! ? #imageLiteral(resourceName: "Flash On") : #imageLiteral(resourceName: "Flash Off")).withRenderingMode(.alwaysTemplate)
+            flashImageView.tintColor = UIColor.white.withAlphaComponent(0.6)
+        }
+    }
     fileprivate var state: State = .empty {
         didSet {
             switch state {
@@ -113,6 +127,7 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         plainTextView.becomeFirstResponder()
+        useFlash = true
     }
     
     @IBAction func transmitTapped(_ sender: UIView) {
@@ -139,7 +154,13 @@ class ViewController: UIViewController {
             
             self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse, remainingDuration) in
                 self?.timeLabel.text = self?.stringForTransmitDuration(remainingDuration)
-                self?.toggleTorch(morse)
+                if self?.useFlash == true {
+                    self?.toggleTorch(morse)
+                } else {
+                    UIView.animate(withDuration: 0.1) {
+                        self?.view.alpha = morse ? 1 : 0.5
+                    }
+                }
                 }, reset: { [weak self] in
                     self?.state = .text
                     self?.toggleTorch(false)
@@ -166,6 +187,16 @@ class ViewController: UIViewController {
             
             device.torchMode = on ? .on : .off
         } catch {}
+    }
+    
+    fileprivate func canUseTorch() -> Bool {
+        guard let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) else { return false }
+        
+        return device.hasTorch
+    }
+    
+    @IBAction func flashTapped(_ sender: UIView) {
+        useFlash = !useFlash
     }
 }
 
