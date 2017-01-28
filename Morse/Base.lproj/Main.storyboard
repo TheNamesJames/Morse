@@ -60,13 +60,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-W3-hsL" customClass="UIControl">
                                 <rect key="frame" x="0.0" y="460" width="414" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMb-EU-2UG">
-                                        <rect key="frame" x="24" y="19" width="19" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMb-EU-2UG">
+                                        <rect key="frame" x="74" y="19" width="19" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="TRANSMIT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ujq-hI-Hs4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="TRANSMIT" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Ujq-hI-Hs4">
                                         <rect key="frame" x="307" y="20" width="83" height="20"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -78,6 +78,7 @@
                                     <constraint firstAttribute="height" constant="60" id="7xG-H4-9pl"/>
                                     <constraint firstItem="Ujq-hI-Hs4" firstAttribute="centerY" secondItem="vuH-W3-hsL" secondAttribute="centerY" id="CbT-Bw-CIh"/>
                                     <constraint firstItem="RMb-EU-2UG" firstAttribute="baseline" secondItem="Ujq-hI-Hs4" secondAttribute="baseline" id="aST-qp-zBP"/>
+                                    <constraint firstItem="Ujq-hI-Hs4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RMb-EU-2UG" secondAttribute="trailing" constant="12" id="zAL-fw-JZW"/>
                                 </constraints>
                                 <connections>
                                     <action selector="transmitTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cyT-GQ-ZPm"/>
@@ -97,7 +98,7 @@
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="Wnb-1q-kpK"/>
                             <constraint firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" constant="24" id="aHD-C4-yqv"/>
                             <constraint firstAttribute="bottom" secondItem="vuH-W3-hsL" secondAttribute="bottom" constant="216" id="bI2-pc-4Ca"/>
-                            <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="mti-te-jxY"/>
+                            <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" constant="50" id="mti-te-jxY"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QNI-Ss-i3w" secondAttribute="bottom" constant="8" id="pID-RR-Y7q"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="24" id="v8G-Fz-fnk"/>
