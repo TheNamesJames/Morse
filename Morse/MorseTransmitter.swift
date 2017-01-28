@@ -11,7 +11,7 @@ import Foundation
 class MorseTransmitter {
     static let pulseDuration: Double = 0.25
     
-    typealias SignalBlock = (Bool) -> Void
+    typealias SignalBlock = (Bool, _ remaining: Double) -> Void
     
     typealias TimerInvalidatorBlock = (isTransmitting: () -> Bool, cancel: () -> Void)
     
@@ -36,9 +36,9 @@ class MorseTransmitter {
                 return
             }
             
-            remaining = Array(remaining.dropFirst())
+            block(pulse, transmitDuration(for: remaining))
             
-            block(pulse)
+            remaining = Array(remaining.dropFirst())
         }
         
         RunLoop.current.add(timer, forMode: .commonModes)

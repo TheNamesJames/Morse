@@ -136,7 +136,8 @@ class ViewController: UIViewController {
             self.plainTextView.isUserInteractionEnabled = false
             self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
             
-            self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse) in
+            self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse, remainingDuration) in
+                self?.timeLabel.text = self?.stringForTransmitDuration(remainingDuration)
                 UIView.animate(withDuration: 0.1) {
                     self?.view.alpha = morse ? 1 : 0.3
                     self?.toggleTorch(morse)
@@ -150,7 +151,7 @@ class ViewController: UIViewController {
                     }, completion: { _ in
                         self?.morseTransmitterInvalidatorBlock = nil
                         self?.plainTextView.isUserInteractionEnabled = true
-                        self?.plainTextView.textColor = UIColor.white
+                        self?.textViewDidChange(self!.plainTextView)
                     })
             })
         })
@@ -222,6 +223,8 @@ extension ViewController: UITextViewDelegate {
         
         state = .text
         
+        textView.textColor = .white
+        
         let morse = MorseController.morse(from: text)!
         morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse))
         morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height
@@ -234,6 +237,14 @@ extension ViewController: UITextViewDelegate {
         paragraphStyle.maximumLineHeight = 36
         paragraphStyle.minimumLineHeight = 36
         return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.customFont(.playfairDisplay, size: 36), NSParagraphStyleAttributeName: paragraphStyle])
+    }
+    
+    fileprivate func stringForTransmitDuration(_ duration: Double) -> String {
+        guard duration < 300 else {
+            return "💤"
+        }
+        
+        return "\(Int(duration.rounded()))s"
     }
     
     private func shakeTextView() {
