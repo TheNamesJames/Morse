@@ -61,7 +61,7 @@
                                 <rect key="frame" x="0.0" y="460" width="414" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMb-EU-2UG">
-                                        <rect key="frame" x="74" y="19" width="19" height="21"/>
+                                        <rect key="frame" x="24" y="19" width="19" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -116,7 +116,7 @@
                             <constraint firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" constant="24" id="aHD-C4-yqv"/>
                             <constraint firstAttribute="bottom" secondItem="vuH-W3-hsL" secondAttribute="bottom" constant="216" id="bI2-pc-4Ca"/>
                             <constraint firstAttribute="trailing" secondItem="vuC-fA-Ejc" secondAttribute="trailing" id="cb5-84-zre"/>
-                            <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" constant="50" id="mti-te-jxY"/>
+                            <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="mti-te-jxY"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QNI-Ss-i3w" secondAttribute="bottom" constant="8" id="pID-RR-Y7q"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="24" id="v8G-Fz-fnk"/>
