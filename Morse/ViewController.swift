@@ -15,8 +15,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var morseLabel: UILabel!
     @IBOutlet weak var morseScroll: UIScrollView!
     @IBOutlet weak var morseScrollPreferredHeight: NSLayoutConstraint!
+    private var showingMorseFaderAndKeyLine = false
     @IBOutlet weak var transmitKeyline: UIView!
     @IBOutlet weak var faderView: UIView!
+    private var faderLayer: CAGradientLayer!
     @IBOutlet weak var transmitLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
@@ -69,10 +71,11 @@ class ViewController: UIViewController {
         
         textViewDidChange(plainTextView)
         
-        let faderLayer = CAGradientLayer()
+        faderLayer = CAGradientLayer()
         faderLayer.frame = faderView.bounds
         faderLayer.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor]
         faderLayer.locations = [0, 0.25, 1]
+        faderLayer.needsDisplayOnBoundsChange = true
         faderView.layer.mask = faderLayer
     }
     
@@ -85,9 +88,18 @@ class ViewController: UIViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let object = object as? UIScrollView, object === morseScroll && (keyPath == "contentSize" || keyPath == "contentOffset") {
             morseScrollPreferredHeight.constant = morseScroll.contentSize.height
+            faderLayer.frame = faderView.bounds
+            
             let showFader = morseScroll.contentSize.height > morseScroll.bounds.height && morseScroll.contentOffset.y < morseScroll.contentSize.height - morseScroll.bounds.height
-            faderView.alpha = showFader ? 1 : 0
-            transmitKeyline.alpha = showFader ? 1 : 0
+            if showFader != showingMorseFaderAndKeyLine {
+                showingMorseFaderAndKeyLine = showFader
+                UIView.animate(withDuration: 0.1) {
+                    self.faderView.alpha = showFader ? 1 : 0
+                    self.transmitKeyline.alpha = showFader ? 1 : 0
+                    self.view.layoutIfNeeded()
+                    self.faderLayer.frame = self.faderView.bounds
+                }
+            }
         } else if let object = object as? UITextView, object === plainTextView && keyPath == "selectedTextRange" {
             if state == .empty {
                 plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")
