@@ -21,43 +21,22 @@ class MorseTransmitter {
     }
     
     class func transmit(_ morse: [[Morse]], block: @escaping (Bool) -> Void, reset: @escaping () -> Void) -> TimerInvalidatorBlock {
-        var remaining = morse
-        var bipsRemaining: Int = 0
-        
-        func blockybloo() -> Bool {
-            guard bipsRemaining == 0 else {
-                defer {
-                    bipsRemaining -= 1
-                }
-                if bipsRemaining == 1 {
-                    block(false)
-                }
-                return true
-            }
-            guard let word = remaining.first else {
-                return false
-            }
-            guard let letter = word.first else {
-                defer {
-                    remaining = Array(remaining.dropFirst())
-                }
-                return true
-            }
-            
-            bipsRemaining = letter.time
-            remaining = [Array(word.dropFirst())] + Array(remaining.dropFirst())
-            
-            block(letter != .space)
-            return true
-        }
+        return transmit(convert(from: morse), block: block, reset: reset)
+    }
+    
+    class func transmit(_ pulses: [Bool], block: @escaping (Bool) -> Void, reset: @escaping () -> Void) -> TimerInvalidatorBlock {
+        var remaining = pulses
         
         let timer = Timer.scheduledTimer(withTimeInterval: signalDuration, repeats: true) { (timer) in
-            let transmitResult = blockybloo()
-            guard transmitResult else {
+            guard let pulse = remaining.first else {
                 reset()
                 timer.invalidate()
                 return
             }
+            
+            remaining = Array(remaining.dropFirst())
+            
+            block(pulse)
         }
         
         RunLoop.current.add(timer, forMode: .commonModes)
@@ -73,5 +52,24 @@ class MorseTransmitter {
             timer?.invalidate()
         }
         return (isValidBlock, cancelBlock)
+    }
+    
+    class func signalDuration(for morse: [[Morse]]) -> Double {
+        return Double(convert(from: morse).count) * signalDuration
+    }
+    
+    /// Converts morse code into on/off pulses
+    private class func convert(from morse: [[Morse]]) -> [Bool] {
+        var result = [Bool]()
+        for word in morse {
+            for letter in word {
+                for _ in 0..<letter.time {
+                    result.append(letter != .space)
+                }
+                result.append(false)
+            }
+            result.append(false)
+        }
+        return result
     }
 }
