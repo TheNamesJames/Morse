@@ -29,10 +29,14 @@ class ViewController: UIViewController {
             guard let userInfo = notification.userInfo, let endY = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
                 return
             }
+            
             self?.bottomSpace.constant = UIScreen.main.bounds.height - endY.minY
-            UIView.animate(withDuration: 0.1) {
+            
+            let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
+            let options = (userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber)?.uintValue
+            UIView.animate(withDuration: duration ?? 0.1, delay: 0.0, options: UIViewAnimationOptions(rawValue: options ?? 0), animations: {
                 self?.view.layoutIfNeeded()
-            }
+            },  completion: nil)
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardWillShow, object: nil, queue: .main, using: handleKeyboardFrameChange)
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardWillHide, object: nil, queue: .main, using: handleKeyboardFrameChange)
