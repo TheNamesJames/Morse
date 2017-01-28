@@ -144,13 +144,16 @@ class MorseController {
                 }
                 return true
             }
-            guard !remaining.isEmpty else {
+            guard let word = remaining.first else {
                 return false
             }
-            guard let word = remaining.first, let letter = word.first else {
-                remaining = Array(remaining.dropFirst())
-                return blockybloo()
+            guard let letter = word.first else {
+                defer {
+                    remaining = Array(remaining.dropFirst())
+                }
+                return true
             }
+            
             bipsRemaining = letter.time
             remaining = [Array(word.dropFirst())] + Array(remaining.dropFirst())
             
@@ -158,7 +161,7 @@ class MorseController {
             return true
         }
         
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { (timer) in
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { (timer) in
             let transmitResult = blockybloo()
             guard transmitResult else {
                 reset()
