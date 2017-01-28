@@ -62,15 +62,23 @@ class ViewController: UIViewController {
         }
         
         morseScroll.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
+        plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
     }
     
     deinit {
         morseScroll.removeObserver(self, forKeyPath: "contentSize")
+        plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let object = object as? UIScrollView, object === morseScroll && keyPath == "contentSize" {
             morseScrollPreferredHeight.constant = morseScroll.contentSize.height
+        } else if let object = object as? UITextView, object === plainTextView && keyPath == "selectedTextRange" {
+            if state == .empty {
+                plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")
+                object.selectedTextRange = object.textRange(from: object.beginningOfDocument, to: object.beginningOfDocument)
+                plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
+            }
         }
     }
     
