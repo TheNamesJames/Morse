@@ -136,10 +136,6 @@ class ViewController: UIViewController {
         } catch {}
     }
     
-    @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
-        morseTransmitterInvalidatorBlock?()
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -197,11 +193,11 @@ extension ViewController: UITextViewDelegate {
         state = .text
         
         let morse = MorseController.morse(from: text)!
-        morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height //+ morseLabel.textContainerInset.top + morseLabel.textContainerInset.bottom
         morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse))
+        morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height
         
         // FIXME: calc actual time (in MorseController) w/ delays between dots/dashes
-        timeLabel.text = String(morse.flatMap { $0 }.map { $0.time }.reduce(0) { $0.0 + $0.1 })
+        timeLabel.text = String(morse.flatMap { $0 }.reduce(0) { $0.0 + $0.1.time })
     }
     
     private func morseCodeAttributedText(_ string: String) -> NSAttributedString {
