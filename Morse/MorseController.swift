@@ -170,6 +170,8 @@ class MorseController {
             }
         }
         
+        RunLoop.current.add(timer, forMode: .commonModes)
+        
         let isValidBlock: () -> Bool = { [weak timer] in
             timer?.isValid ?? false
         }
