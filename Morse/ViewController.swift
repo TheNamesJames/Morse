@@ -156,10 +156,6 @@ class ViewController: UIViewController {
             device.torchMode = on ? .on : .off
         } catch {}
     }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
 }
 
 extension ViewController: UITextViewDelegate {

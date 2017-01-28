@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter message..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QNI-Ss-i3w">
-                                <rect key="frame" x="24" y="24" width="366" height="245.33333333333331"/>
+                                <rect key="frame" x="24" y="44" width="366" height="225.33333333333331"/>
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" white="1" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>
@@ -107,9 +107,10 @@
                             <constraint firstItem="Ujq-hI-Hs4" firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" id="GvO-Z0-bCq"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="24" id="J3X-yI-JDm"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="top" secondItem="nKe-6N-vpk" secondAttribute="bottom" id="JGy-gp-ZIt"/>
-                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" priority="999" id="KtM-Mw-EWl"/>
+                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" priority="999" constant="-20" id="KtM-Mw-EWl"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MTK-yl-uDy"/>
                             <constraint firstItem="vuC-fA-Ejc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Pov-CF-Zwf"/>
+                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="24" id="UOq-93-Jms"/>
                             <constraint firstItem="ZZo-Je-0nd" firstAttribute="width" secondItem="QNI-Ss-i3w" secondAttribute="width" id="WZg-lP-vro"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="Wnb-1q-kpK"/>
                             <constraint firstItem="vuC-fA-Ejc" firstAttribute="height" secondItem="nKe-6N-vpk" secondAttribute="height" multiplier="0.75" id="ZAl-XF-mlc"/>
@@ -119,10 +120,9 @@
                             <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="mti-te-jxY"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QNI-Ss-i3w" secondAttribute="bottom" constant="8" id="pID-RR-Y7q"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
-                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="24" id="v8G-Fz-fnk"/>
                         </constraints>
                     </view>
-                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="bottomSpace" destination="bI2-pc-4Ca" id="SZr-LT-qwd"/>
                         <outlet property="faderView" destination="vuC-fA-Ejc" id="W3C-gS-9Kg"/>
