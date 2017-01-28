@@ -17,6 +17,7 @@
 		A0E44A4A1E39F19000C34063 /* MorseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E44A491E39F19000C34063 /* MorseController.swift */; };
 		A0FA34441E3CF6EE00F27B1D /* PlayfairDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0FA34431E3CF6EE00F27B1D /* PlayfairDisplay-Black.ttf */; };
 		A0FA34461E3CF74100F27B1D /* UIFontExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FA34451E3CF74100F27B1D /* UIFontExt.swift */; };
+		A0FA34481E3D2B8200F27B1D /* Morse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FA34471E3D2B8200F27B1D /* Morse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		A0E44A491E39F19000C34063 /* MorseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MorseController.swift; sourceTree = "<group>"; };
 		A0FA34431E3CF6EE00F27B1D /* PlayfairDisplay-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Black.ttf"; sourceTree = "<group>"; };
 		A0FA34451E3CF74100F27B1D /* UIFontExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExt.swift; sourceTree = "<group>"; };
+		A0FA34471E3D2B8200F27B1D /* Morse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Morse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */,
+				A0FA34471E3D2B8200F27B1D /* Morse.swift */,
 				A0E44A491E39F19000C34063 /* MorseController.swift */,
 				A0E44A471E395DE400C34063 /* NSLayoutConstraintExt.swift */,
 				A0CCDF9A1E30EC73009C6300 /* AppDelegate.swift */,
@@ -159,6 +162,7 @@
 				A0CCDF9B1E30EC73009C6300 /* AppDelegate.swift in Sources */,
 				A0E44A4A1E39F19000C34063 /* MorseController.swift in Sources */,
 				A0E44A481E395DE400C34063 /* NSLayoutConstraintExt.swift in Sources */,
+				A0FA34481E3D2B8200F27B1D /* Morse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-    fileprivate var morseTransmitterInvalidatorBlock: MorseController.TimerInvalidatorBlock?
+    fileprivate var morseTransmitterInvalidatorBlock: MorseTransmitter.TimerInvalidatorBlock?
     @IBOutlet weak var plainTextView: UITextView!
     @IBOutlet weak var morseLabel: UILabel!
     @IBOutlet weak var morseScroll: UIScrollView!
@@ -124,7 +124,7 @@ class ViewController: UIViewController {
             self.plainTextView.isUserInteractionEnabled = false
             self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
             
-            self.morseTransmitterInvalidatorBlock = MorseController.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse) in
+            self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse) in
                 UIView.animate(withDuration: 0.1) {
                     self?.view.alpha = morse ? 1 : 0.3
                     self?.toggleTorch(morse)
