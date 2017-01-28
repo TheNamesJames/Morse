@@ -80,9 +80,9 @@ class MorseController {
     typealias TimerInvalidatorBlock = () -> Void
     
     enum Morse: Character {
-        case dot = "."
+        case dot = "•"
         case dash = "-"
-        case space = "/"
+        case space = " "
         
         var time: Int {
             switch self {
