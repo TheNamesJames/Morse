@@ -31,7 +31,7 @@ class ViewController: UIViewController {
                 transmitLabel.textColor = UIColor.white.withAlphaComponent(state == .text ? 1 : 0.6)
             case .transmitting:
                 transmitLabel.textColor = UIColor.white
-                transmitLabel.text = "TRANSMITTING. TAP TO CANCEL"
+                transmitLabel.text = "TRANSMITTING. CANCEL"
             }
         }
     }
