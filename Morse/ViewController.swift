@@ -10,25 +10,38 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-    @IBOutlet weak var morseScroll: UIScrollView!
-    @IBOutlet weak var morseLabel: UILabel!
-    @IBOutlet weak var morseLabelWidth: NSLayoutConstraint!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var remainingLabel: UILabel!
-    @IBOutlet weak var morseButton: UIButton!
-    @IBOutlet var morseButtonRight: NSLayoutConstraint!
-    @IBOutlet weak var scrollProgressBar: UIView!
-    @IBOutlet var morseScrollProgress: NSLayoutConstraint!
-    fileprivate var hideScrollProgressTimer: Timer?
     fileprivate var morseTransmitterInvalidatorBlock: MorseController.TimerInvalidatorBlock?
+    @IBOutlet weak var plainTextView: UITextView!
+    @IBOutlet weak var morseLabel: UILabel!
+    @IBOutlet weak var morseScroll: UIScrollView!
+    @IBOutlet weak var morseScrollPreferredHeight: NSLayoutConstraint!
+    @IBOutlet weak var transmitLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var bottomSpace: NSLayoutConstraint!
+    @IBOutlet weak var morseLabelPreferredHeight: NSLayoutConstraint!
+    fileprivate var hasActualText = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        morseLabel.text = nil
-        morseButtonRight.isActive = false
+        let handleKeyboardFrameChange: (Notification) -> Void = { [weak self] (notification) in
+            guard let userInfo = notification.userInfo, let endY = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+                return
+            }
+            self?.bottomSpace.constant = UIScreen.main.bounds.height - endY.minY
+            UIView.animate(withDuration: 0.1) {
+                self?.view.layoutIfNeeded()
+            }
+        }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardDidShow, object: nil, queue: .main, using: handleKeyboardFrameChange)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardDidShow, object: nil, queue: .main, using: handleKeyboardFrameChange)
         
-        morseScroll.addObserver(self, forKeyPath: "contentSize", options: [.initial, .new], context: nil)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: .main) { [weak self] _ in
+            self?.plainTextView.becomeFirstResponder()
+        }
+        
+        morseScroll.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
     }
     
     deinit {
@@ -36,36 +49,27 @@ class ViewController: UIViewController {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if object as? UIScrollView == morseScroll && keyPath == "contentSize" {
-            updateMorseScroller()
+        if let object = object as? UIScrollView, object === morseScroll && keyPath == "contentSize" {
+            morseScrollPreferredHeight.constant = morseScroll.contentSize.height
         }
     }
     
-    fileprivate func didScrollMorse() {
-        updateMorseScroller()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        plainTextView.becomeFirstResponder()
     }
     
-    private func updateMorseScroller() {
-        defer {
-            (morseScrollProgress.firstItem as? UIView)?.needsUpdateConstraints()
-            view.layoutIfNeeded()
-        }
-        guard morseScroll.contentOffset.x / (morseScroll.contentSize.width - morseScroll.bounds.width) > 0.0001 else {
-            morseScrollProgress = morseScrollProgress.withMultiplier(0.0001, automaticallyActivate: true)
-            return
-        }
-        morseScrollProgress = morseScrollProgress.withMultiplier(morseScroll.contentOffset.x / (morseScroll.contentSize.width - morseScroll.bounds.width), automaticallyActivate: true)
-    }
-    
-    @IBAction func transmitTapped(_ sender: UIButton) {
+    @IBAction func transmitTapped(_ sender: UIView) {
         UIView.animate(withDuration: 0.5, animations: {
             self.view.alpha = 0.3
         }, completion: { _ in
-            self.textField.isEnabled = false
-            self.morseScroll.isUserInteractionEnabled = false
-            self.morseButton.isEnabled = false
+            self.plainTextView.isUserInteractionEnabled = false
+            self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
+            self.morseLabel.isUserInteractionEnabled = false
+            self.transmitLabel.textColor = UIColor.white.withAlphaComponent(0.6)
             
-            self.morseTransmitterInvalidatorBlock = MorseController.transmit(self.textField.text ?? "", block: { [weak self] (morse) in
+            self.morseTransmitterInvalidatorBlock = MorseController.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse) in
                 UIView.animate(withDuration: 0.1) {
                     self?.view.alpha = morse ? 1 : 0.3
                     self?.toggleTorch(morse)
@@ -77,9 +81,10 @@ class ViewController: UIViewController {
                         self?.view.alpha = 1
                     }, completion: { _ in
                         self?.morseTransmitterInvalidatorBlock = nil
-                        self?.textField.isEnabled = true
-                        self?.morseScroll.isUserInteractionEnabled = true
-                        self?.morseButton.isEnabled = true
+                        self?.plainTextView.isUserInteractionEnabled = true
+                        self?.plainTextView.textColor = UIColor.white
+                        self?.morseLabel.isUserInteractionEnabled = true
+                        self?.transmitLabel.textColor = UIColor.white
                     })
             })
         })
@@ -107,9 +112,9 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let replacedString = ((textField.text ?? "") as NSString).replacingCharacters(in: range, with: string) as String
+extension ViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let replacedString = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text) as String
         let valid = MorseController.validate(replacedString).isValid
         
         if !valid {
@@ -119,23 +124,40 @@ extension ViewController: UITextFieldDelegate {
         return valid
     }
     
-    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        guard let text = sender.text, !text.isEmpty else {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if !hasActualText {
+            textView.text = nil
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        guard let text = textView.text, !text.isEmpty else {
+//            textView.text = "Enter message..."
+//            textView.textColor = UIColor.white.withAlphaComponent(0.6)
             morseLabel.text = nil
-            morseLabelWidth.constant = 0
-            remainingLabel.text = String(120)
-            sender.clearButtonMode = .never
-            setMorseButtonHidden(true)
+            morseLabelPreferredHeight.constant = 0
+            timeLabel.text = nil
+            transmitLabel.text = "TRANSMIT"
+            transmitLabel.textColor = UIColor.white.withAlphaComponent(0.6)
             return
         }
         
-        morseLabel.text = MorseController.morseString(from: text)
-        morseLabelWidth.constant = morseLabel.sizeThatFits(CGSize(width: .greatestFiniteMagnitude, height: morseLabel.bounds.height)).width
+        let morse = MorseController.morse(from: text)!
+        morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse), large: false)
+        morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height //+ morseLabel.textContainerInset.top + morseLabel.textContainerInset.bottom
         
-        sender.clearButtonMode = .always
-        
-        remainingLabel.text = String(MorseController.inputLimit - (text.characters.count))
-        setMorseButtonHidden(false)
+        // FIXME: calc actual time (in MorseController) w/ delays between dots/dashes
+        timeLabel.text = String(morse.flatMap { $0 }.map { $0.time }.reduce(0) { $0.0 + $0.1 })
+        transmitLabel.text = "TRANSMIT"
+        transmitLabel.textColor = UIColor.white
+    }
+    
+    private func morseCodeAttributedText(_ string: String, large: Bool) -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.maximumLineHeight = large ? 48 : 36
+        paragraphStyle.minimumLineHeight = large ? 48 : 36
+//        paragraphStyle.lineSpacing = large ? 48 : 36
+        return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 36), NSParagraphStyleAttributeName: paragraphStyle])
     }
     
     private func shakeTextField() {
@@ -143,68 +165,6 @@ extension ViewController: UITextFieldDelegate {
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         animation.duration = 0.5
         animation.values = [-10.0, 10.0, -10.0, 10.0, -5.0, 5.0, -2.5, 2.5, 0.0 ].map { $0 / 2}
-        textField.layer.add(animation, forKey: "shake")
-    }
-    
-    private func setMorseButtonHidden(_ hidden: Bool) {
-        guard (morseButtonRight.isActive && hidden) || (!morseButtonRight.isActive && !hidden) else {
-            return
-        }
-        
-        morseButton.isUserInteractionEnabled = !hidden
-        morseButtonRight.isActive = !hidden
-        morseButton.setNeedsLayout()
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.beginFromCurrentState, hidden ? .curveEaseIn : .curveEaseOut], animations: {
-            self.morseButton.alpha = hidden ? 0 : 1
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-        
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.beginFromCurrentState, !hidden ? .curveEaseIn : .curveEaseOut], animations: {
-            self.morseButton.alpha = hidden ? 0 : 1
-        }, completion: nil)
-    }
-}
-
-extension ViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        setMorseScrollHighlighted(true)
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            setMorseScrollHighlighted(false)
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        setMorseScrollHighlighted(false)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        didScrollMorse()
-    }
-    
-    private func setMorseScrollHighlighted(_ highlighted: Bool) {
-        hideScrollProgressTimer?.invalidate()
-        hideScrollProgressTimer = nil
-        
-        if highlighted {
-            UIView.animate(withDuration: 0.3) {
-                self.scrollProgressBar.alpha = 1
-            }
-        } else {
-            hideScrollProgressTimer?.invalidate()
-            hideScrollProgressTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [ weak self] _ in
-                UIView.animate(withDuration: 0.5) {
-                    self?.scrollProgressBar.alpha = 0.1
-                }
-            }
-        }
-    }
-}
-
-extension ViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return morseTransmitterInvalidatorBlock != nil
+        view.layer.add(animation, forKey: "shake")
     }
 }
