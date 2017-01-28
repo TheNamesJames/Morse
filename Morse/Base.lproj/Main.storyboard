@@ -33,13 +33,13 @@
                                 </connections>
                             </textView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKe-6N-vpk">
-                                <rect key="frame" x="24" y="396" width="366" height="64"/>
+                                <rect key="frame" x="24" y="424" width="366" height="36"/>
                                 <subviews>
                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="••• -- •••" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="ZZo-Je-0nd">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="64"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="32"/>
                                         <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="64" id="b5a-Bx-kpr"/>
+                                            <constraint firstAttribute="height" constant="32" id="b5a-Bx-kpr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,12 +49,12 @@
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ZZo-Je-0nd" firstAttribute="leading" secondItem="nKe-6N-vpk" secondAttribute="leading" id="2Pz-dN-N6K"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="Kut-Jz-und"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Kut-Jz-und"/>
                                     <constraint firstItem="ZZo-Je-0nd" firstAttribute="top" secondItem="nKe-6N-vpk" secondAttribute="top" id="eqf-R6-sPc"/>
                                     <constraint firstAttribute="trailing" secondItem="ZZo-Je-0nd" secondAttribute="trailing" id="ewD-Td-t5M"/>
                                     <constraint firstAttribute="bottom" secondItem="ZZo-Je-0nd" secondAttribute="bottom" id="s8M-D2-Xuu"/>
                                     <constraint firstItem="ZZo-Je-0nd" firstAttribute="width" secondItem="nKe-6N-vpk" secondAttribute="width" id="vWd-rX-DhB"/>
-                                    <constraint firstAttribute="height" priority="750" id="zA7-qO-SPp"/>
+                                    <constraint firstAttribute="height" priority="999" constant="36" id="zA7-qO-SPp"/>
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-W3-hsL" customClass="UIControl">
@@ -95,7 +95,7 @@
                                 </connections>
                             </view>
                             <view opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuC-fA-Ejc">
-                                <rect key="frame" x="0.0" y="412" width="414" height="48"/>
+                                <rect key="frame" x="0.0" y="433.33333333333326" width="414" height="26.666666666666686"/>
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
@@ -107,7 +107,7 @@
                             <constraint firstItem="Ujq-hI-Hs4" firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" id="GvO-Z0-bCq"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="24" id="J3X-yI-JDm"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="top" secondItem="nKe-6N-vpk" secondAttribute="bottom" id="JGy-gp-ZIt"/>
-                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" priority="999" constant="-20" id="KtM-Mw-EWl"/>
+                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" priority="998" constant="-20" id="KtM-Mw-EWl"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MTK-yl-uDy"/>
                             <constraint firstItem="vuC-fA-Ejc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Pov-CF-Zwf"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="24" id="UOq-93-Jms"/>
@@ -117,6 +117,7 @@
                             <constraint firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" constant="24" id="aHD-C4-yqv"/>
                             <constraint firstAttribute="bottom" secondItem="vuH-W3-hsL" secondAttribute="bottom" constant="216" id="bI2-pc-4Ca"/>
                             <constraint firstAttribute="trailing" secondItem="vuC-fA-Ejc" secondAttribute="trailing" id="cb5-84-zre"/>
+                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" relation="greaterThanOrEqual" secondItem="nKe-6N-vpk" secondAttribute="height" multiplier="1.5" id="gBP-sT-Y6S"/>
                             <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="mti-te-jxY"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QNI-Ss-i3w" secondAttribute="bottom" constant="8" id="pID-RR-Y7q"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
