@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var morseLabel: UILabel!
     @IBOutlet weak var morseScroll: UIScrollView!
     @IBOutlet weak var morseScrollPreferredHeight: NSLayoutConstraint!
+    @IBOutlet weak var transmitKeyline: UIView!
+    @IBOutlet weak var faderView: UIView!
     @IBOutlet weak var transmitLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
@@ -62,19 +64,30 @@ class ViewController: UIViewController {
         }
         
         morseScroll.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
+        morseScroll.addObserver(self, forKeyPath: "contentOffset", options: [.new], context: nil)
         plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
         
         textViewDidChange(plainTextView)
+        
+        let faderLayer = CAGradientLayer()
+        faderLayer.frame = faderView.bounds
+        faderLayer.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor, #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor]
+        faderLayer.locations = [0, 0.25, 1]
+        faderView.layer.mask = faderLayer
     }
     
     deinit {
         morseScroll.removeObserver(self, forKeyPath: "contentSize")
+        morseScroll.removeObserver(self, forKeyPath: "contentOffset")
         plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let object = object as? UIScrollView, object === morseScroll && keyPath == "contentSize" {
+        if let object = object as? UIScrollView, object === morseScroll && (keyPath == "contentSize" || keyPath == "contentOffset") {
             morseScrollPreferredHeight.constant = morseScroll.contentSize.height
+            let showFader = morseScroll.contentSize.height > morseScroll.bounds.height && morseScroll.contentOffset.y < morseScroll.contentSize.height - morseScroll.bounds.height
+            faderView.alpha = showFader ? 1 : 0
+            transmitKeyline.alpha = showFader ? 1 : 0
         } else if let object = object as? UITextView, object === plainTextView && keyPath == "selectedTextRange" {
             if state == .empty {
                 plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")

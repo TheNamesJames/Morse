@@ -32,7 +32,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="wZe-Oo-yJx"/>
                                 </connections>
                             </textView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKe-6N-vpk">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKe-6N-vpk">
                                 <rect key="frame" x="24" y="396" width="366" height="64"/>
                                 <subviews>
                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="••• -- •••" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="ZZo-Je-0nd">
@@ -72,11 +72,21 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nmk-FB-H9N">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                                        <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16078431372549018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="5vK-ct-dvc"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="nmk-FB-H9N" firstAttribute="leading" secondItem="vuH-W3-hsL" secondAttribute="leading" id="0x1-Nf-ajK"/>
                                     <constraint firstAttribute="height" constant="60" id="7xG-H4-9pl"/>
                                     <constraint firstItem="Ujq-hI-Hs4" firstAttribute="centerY" secondItem="vuH-W3-hsL" secondAttribute="centerY" id="CbT-Bw-CIh"/>
+                                    <constraint firstItem="nmk-FB-H9N" firstAttribute="top" secondItem="vuH-W3-hsL" secondAttribute="top" id="HER-U4-u91"/>
+                                    <constraint firstAttribute="trailing" secondItem="nmk-FB-H9N" secondAttribute="trailing" id="Tl5-L6-2HD"/>
                                     <constraint firstItem="RMb-EU-2UG" firstAttribute="baseline" secondItem="Ujq-hI-Hs4" secondAttribute="baseline" id="aST-qp-zBP"/>
                                     <constraint firstItem="Ujq-hI-Hs4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RMb-EU-2UG" secondAttribute="trailing" constant="12" id="zAL-fw-JZW"/>
                                 </constraints>
@@ -84,20 +94,28 @@
                                     <action selector="transmitTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cyT-GQ-ZPm"/>
                                 </connections>
                             </view>
+                            <view opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuC-fA-Ejc">
+                                <rect key="frame" x="0.0" y="412" width="414" height="48"/>
+                                <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="vuH-W3-hsL" firstAttribute="top" secondItem="vuC-fA-Ejc" secondAttribute="bottom" id="8Hh-9u-UnJ"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" id="AzK-vC-GQJ"/>
                             <constraint firstItem="Ujq-hI-Hs4" firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" id="GvO-Z0-bCq"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="24" id="J3X-yI-JDm"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="top" secondItem="nKe-6N-vpk" secondAttribute="bottom" id="JGy-gp-ZIt"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" priority="999" id="KtM-Mw-EWl"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MTK-yl-uDy"/>
+                            <constraint firstItem="vuC-fA-Ejc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Pov-CF-Zwf"/>
                             <constraint firstItem="ZZo-Je-0nd" firstAttribute="width" secondItem="QNI-Ss-i3w" secondAttribute="width" id="WZg-lP-vro"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="Wnb-1q-kpK"/>
+                            <constraint firstItem="vuC-fA-Ejc" firstAttribute="height" secondItem="nKe-6N-vpk" secondAttribute="height" multiplier="0.75" id="ZAl-XF-mlc"/>
                             <constraint firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" constant="24" id="aHD-C4-yqv"/>
                             <constraint firstAttribute="bottom" secondItem="vuH-W3-hsL" secondAttribute="bottom" constant="216" id="bI2-pc-4Ca"/>
+                            <constraint firstAttribute="trailing" secondItem="vuC-fA-Ejc" secondAttribute="trailing" id="cb5-84-zre"/>
                             <constraint firstItem="RMb-EU-2UG" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" constant="50" id="mti-te-jxY"/>
                             <constraint firstItem="nKe-6N-vpk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QNI-Ss-i3w" secondAttribute="bottom" constant="8" id="pID-RR-Y7q"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
@@ -107,19 +125,21 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="bottomSpace" destination="bI2-pc-4Ca" id="SZr-LT-qwd"/>
+                        <outlet property="faderView" destination="vuC-fA-Ejc" id="W3C-gS-9Kg"/>
                         <outlet property="morseLabel" destination="ZZo-Je-0nd" id="0mr-oU-fsK"/>
                         <outlet property="morseLabelPreferredHeight" destination="b5a-Bx-kpr" id="e7K-fs-er7"/>
                         <outlet property="morseScroll" destination="nKe-6N-vpk" id="Fk3-xc-Gys"/>
                         <outlet property="morseScrollPreferredHeight" destination="zA7-qO-SPp" id="a84-k8-mtm"/>
                         <outlet property="plainTextView" destination="QNI-Ss-i3w" id="Mpw-EH-3IV"/>
                         <outlet property="timeLabel" destination="RMb-EU-2UG" id="F7a-JX-tgh"/>
+                        <outlet property="transmitKeyline" destination="nmk-FB-H9N" id="6gU-jS-7gP"/>
                         <outlet property="transmitLabel" destination="Ujq-hI-Hs4" id="Uu5-l7-IgB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="a9n-eg-owI"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="136.23188405797103" y="138.58695652173915"/>
         </scene>
     </scenes>
 </document>
