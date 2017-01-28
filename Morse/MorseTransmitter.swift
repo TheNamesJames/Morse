@@ -9,6 +9,8 @@
 import Foundation
 
 class MorseTransmitter {
+    static let signalDuration: Double = 0.25
+    
     typealias TimerInvalidatorBlock = (isTransmitting: () -> Bool, cancel: () -> Void)
     
     class func transmit(_ string: String, block: @escaping (Bool) -> Void, reset: @escaping () -> Void) -> TimerInvalidatorBlock? {
@@ -49,7 +51,7 @@ class MorseTransmitter {
             return true
         }
         
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { (timer) in
+        let timer = Timer.scheduledTimer(withTimeInterval: signalDuration, repeats: true) { (timer) in
             let transmitResult = blockybloo()
             guard transmitResult else {
                 reset()
