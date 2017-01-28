@@ -183,8 +183,13 @@ extension ViewController: UITextViewDelegate {
         guard state == .text, let text = textView.text, !text.isEmpty else {
             state = .empty
             
+            textView.text = "Enter message..."
+            textView.textColor = UIColor.white.withAlphaComponent(0.6)
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            
             morseLabel.text = nil
             morseLabelPreferredHeight.constant = 0
+            
             timeLabel.text = nil
             return
         }
