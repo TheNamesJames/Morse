@@ -169,13 +169,14 @@ extension ViewController: UITextViewDelegate {
         guard !CharacterSet.newlines.contains(text.unicodeScalars.first ?? UnicodeScalar(UInt8())) else {
             return false // If first character is newline, ignore (prevents auto capitalisation)
         }
+        let replacedString = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text) as String
         
         switch state {
         case .empty:
             guard !text.isEmpty else {
                 return false
             }
-            guard MorseController.validate(text).isValid else {
+            guard MorseController.validate(replacedString).isValid else {
                 shakeTextView()
                 return false
             }
@@ -186,7 +187,7 @@ extension ViewController: UITextViewDelegate {
         case .transmitting:
             return false
         case .text:
-            guard MorseController.validate(text).isValid else {
+            guard MorseController.validate(replacedString).isValid else {
                 shakeTextView()
                 return false
             }

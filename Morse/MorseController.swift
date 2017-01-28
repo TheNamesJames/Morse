@@ -75,8 +75,6 @@ class MorseController {
         return CharacterSet(charactersIn: uniqueValidChars.joined())
     }()
     
-    static let inputLimit = 120
-    
     typealias TimerInvalidatorBlock = (isTransmitting: () -> Bool, cancel: () -> Void)
     
     enum Morse: Character {
@@ -99,7 +97,6 @@ class MorseController {
     class func validate(_ string: String) -> (isValid: Bool, validatedString: String) {
         let validated = string.unicodeScalars
             .filter { validCharacters.contains($0) }
-            .prefix(inputLimit)
             .reduce("") { $0.0 + String($0.1) }
         
         return (string == validated, validated)
