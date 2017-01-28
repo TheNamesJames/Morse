@@ -118,10 +118,10 @@ extension ViewController: UITextViewDelegate {
         let valid = MorseController.validate(replacedString).isValid
         
         if !valid {
-            shakeTextField()
         }
         
         return valid
+                shakeTextView()
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -160,11 +160,11 @@ extension ViewController: UITextViewDelegate {
         return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 36), NSParagraphStyleAttributeName: paragraphStyle])
     }
     
-    private func shakeTextField() {
+    private func shakeTextView() {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         animation.duration = 0.5
-        animation.values = [-10.0, 10.0, -10.0, 10.0, -5.0, 5.0, -2.5, 2.5, 0.0 ].map { $0 / 2}
-        view.layer.add(animation, forKey: "shake")
+        animation.values = [-5, 5, -5, 5, -2.5, 2.5, -1.25, 1.25, 0]
+        plainTextView.layer.add(animation, forKey: "shake")
     }
 }
