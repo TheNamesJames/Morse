@@ -45,7 +45,7 @@ class MorseTransmitter {
             bipsRemaining = letter.time
             remaining = [Array(word.dropFirst())] + Array(remaining.dropFirst())
             
-            block(true)
+            block(letter != .space)
             return true
         }
         

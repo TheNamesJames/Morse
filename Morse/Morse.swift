@@ -20,7 +20,7 @@ enum Morse: Character {
         case .dash:
             return 2
         case .space:
-            return 3
+            return 1
         }
     }
     
