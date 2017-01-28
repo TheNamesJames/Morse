@@ -63,9 +63,9 @@ class MorseController {
         "-": [.dash, .dot, .dot, .dot, .dot, .dash],
         "_": [.dot, .dot, .dash, .dash, .dot, .dash],
         "\"": [.dot, .dash, .dot, .dot, .dash, .dot],
-         "$": [.dot, .dot, .dot, .dash, .dot, .dot, .dash],
-         "@": [.dot, .dash, .dash, .dot, .dash, .dot],
-         " ": [.space]
+        "$": [.dot, .dot, .dot, .dash, .dot, .dot, .dash],
+        "@": [.dot, .dash, .dash, .dot, .dash, .dot],
+        " ": [.space]
     ]
     
     private static let shared = MorseController()
