@@ -197,19 +197,18 @@ extension ViewController: UITextViewDelegate {
         state = .text
         
         let morse = MorseController.morse(from: text)!
-        morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse), large: false)
         morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height //+ morseLabel.textContainerInset.top + morseLabel.textContainerInset.bottom
+        morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse))
         
         // FIXME: calc actual time (in MorseController) w/ delays between dots/dashes
         timeLabel.text = String(morse.flatMap { $0 }.map { $0.time }.reduce(0) { $0.0 + $0.1 })
     }
     
-    private func morseCodeAttributedText(_ string: String, large: Bool) -> NSAttributedString {
+    private func morseCodeAttributedText(_ string: String) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.maximumLineHeight = large ? 48 : 36
-        paragraphStyle.minimumLineHeight = large ? 48 : 36
-//        paragraphStyle.lineSpacing = large ? 48 : 36
-        return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 36), NSParagraphStyleAttributeName: paragraphStyle])
+        paragraphStyle.maximumLineHeight = 36
+        paragraphStyle.minimumLineHeight = 36
+        return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.customFont(.playfairDisplay, size: 36), NSParagraphStyleAttributeName: paragraphStyle])
     }
     
     private func shakeTextView() {
