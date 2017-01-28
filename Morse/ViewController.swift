@@ -123,7 +123,6 @@ class ViewController: UIViewController {
         }, completion: { _ in
             self.plainTextView.isUserInteractionEnabled = false
             self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
-            self.morseLabel.isUserInteractionEnabled = false
             
             self.morseTransmitterInvalidatorBlock = MorseController.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse) in
                 UIView.animate(withDuration: 0.1) {
@@ -140,7 +139,6 @@ class ViewController: UIViewController {
                         self?.morseTransmitterInvalidatorBlock = nil
                         self?.plainTextView.isUserInteractionEnabled = true
                         self?.plainTextView.textColor = UIColor.white
-                        self?.morseLabel.isUserInteractionEnabled = true
                     })
             })
         })
