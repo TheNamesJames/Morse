@@ -9,7 +9,7 @@
 import Foundation
 
 class MorseTransmitter {
-    static let pulseDuration: Double = 0.25
+    static let pulseDuration: Double = 0.2
     
     typealias SignalBlock = (Bool, _ remaining: Double) -> Void
     
