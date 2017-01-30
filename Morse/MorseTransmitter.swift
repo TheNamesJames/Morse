@@ -67,15 +67,16 @@ class MorseTransmitter {
     /// Converts morse code into on/off pulses
     private class func convert(from morse: [[Morse]]) -> [Bool] {
         var result = [Bool]()
-        for word in morse {
+        for (i, word) in morse.enumerated() {
             for letter in word {
-                for _ in 0..<letter.time {
-                    result.append(letter != .space)
-                }
+                result.append(contentsOf: [Bool](repeating: letter != .space, count: letter.time))
                 result.append(false)
             }
-            result.append(false)
+            if i != morse.count-1 {
+                result.append(false)
+                result.append(false)
+            }
         }
-        return result
+        return Array(result.dropLast())
     }
 }
