@@ -261,7 +261,7 @@ extension ViewController: UITextViewDelegate {
             return "💤"
         }
         
-        return "\(Int(duration.rounded()))s"
+        return DateComponentsFormatter.localizedString(from: duration, unitsStyle: .abbreviated) ?? "😳"
     }
     
     private func shakeTextView() {

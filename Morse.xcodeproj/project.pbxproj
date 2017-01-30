@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A07F329C1E3C0FC600079E2A /* MorseTransmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */; };
+		A0BC09EE1E3FBC8400E03DF3 /* DateComponentsFormatterExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BC09ED1E3FBC8400E03DF3 /* DateComponentsFormatterExt.swift */; };
 		A0CCDF9B1E30EC73009C6300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCDF9A1E30EC73009C6300 /* AppDelegate.swift */; };
 		A0CCDF9D1E30EC73009C6300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCDF9C1E30EC73009C6300 /* ViewController.swift */; };
 		A0CCDFA01E30EC73009C6300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0CCDF9E1E30EC73009C6300 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MorseTransmitter.swift; sourceTree = "<group>"; };
+		A0BC09ED1E3FBC8400E03DF3 /* DateComponentsFormatterExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateComponentsFormatterExt.swift; sourceTree = "<group>"; };
 		A0CCDF971E30EC73009C6300 /* Morse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CCDF9A1E30EC73009C6300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0CCDF9C1E30EC73009C6300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 		A0CCDF991E30EC73009C6300 /* Morse */ = {
 			isa = PBXGroup;
 			children = (
+				A0BC09ED1E3FBC8400E03DF3 /* DateComponentsFormatterExt.swift */,
 				A07F329B1E3C0FC600079E2A /* MorseTransmitter.swift */,
 				A0FA34471E3D2B8200F27B1D /* Morse.swift */,
 				A0E44A491E39F19000C34063 /* MorseController.swift */,
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BC09EE1E3FBC8400E03DF3 /* DateComponentsFormatterExt.swift in Sources */,
 				A0CCDF9D1E30EC73009C6300 /* ViewController.swift in Sources */,
 				A07F329C1E3C0FC600079E2A /* MorseTransmitter.swift in Sources */,
 				A0FA34461E3CF74100F27B1D /* UIFontExt.swift in Sources */,
