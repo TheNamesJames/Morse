@@ -135,6 +135,7 @@ class ViewController: UIViewController {
         state = .transmitting
         
         UIView.animate(withDuration: 0.5, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
             self.view.alpha = 0.7
         }, completion: { _ in
             self.plainTextView.isUserInteractionEnabled = false
@@ -155,6 +156,7 @@ class ViewController: UIViewController {
                     
                     UIView.animate(withDuration: 1, animations: {
                         self?.view.alpha = 1
+                        self?.setNeedsStatusBarAppearanceUpdate()
                     }, completion: { _ in
                         self?.morseTransmitterInvalidatorBlock = nil
                         self?.plainTextView.isUserInteractionEnabled = true
@@ -262,6 +264,14 @@ extension ViewController: UITextViewDelegate {
         }
         
         return DateComponentsFormatter.localizedString(from: duration, unitsStyle: .abbreviated) ?? "😳"
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return state == .transmitting ? .default : .lightContent
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     private func shakeTextView() {
