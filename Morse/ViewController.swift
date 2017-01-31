@@ -152,7 +152,7 @@ class ViewController: UIViewController {
             self.plainTextView.isUserInteractionEnabled = false
             self.plainTextView.textColor = UIColor.white.withAlphaComponent(0.6)
             
-            self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.text ?? "", block: { [weak self] (morse, remainingDuration) in
+            self.morseTransmitterInvalidatorBlock = MorseTransmitter.transmit(self.plainTextView.attributedText?.string ?? "", block: { [weak self] (morse, remainingDuration) in
                 self?.timeLabel.text = self?.stringForTransmitDuration(remainingDuration)
                 if self?.useFlash == true {
                     self?.toggleTorch(morse)
@@ -206,7 +206,8 @@ extension ViewController: UITextViewDelegate {
         guard !CharacterSet.newlines.contains(text.unicodeScalars.first ?? UnicodeScalar(UInt8())) else {
             return false // If first character is newline, ignore (prevents auto capitalisation)
         }
-        let replacedString = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text) as String
+        
+        let replacedString = ((textView.attributedText?.string ?? "") as NSString).replacingCharacters(in: range, with: text) as String
         
         switch state {
         case .empty:
@@ -217,7 +218,7 @@ extension ViewController: UITextViewDelegate {
                 shakeTextView()
                 return false
             }
-            textView.text = text
+            textView.attributedText = plainTextAttributedText(text)
             state = .text
             textViewDidChange(textView)
             return false
@@ -237,10 +238,10 @@ extension ViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        guard state == .text, let text = textView.text, !text.isEmpty else {
+        guard state == .text, let text = textView.attributedText, !text.string.isEmpty else {
             state = .empty
             
-            textView.text = "Enter message..."
+            textView.attributedText = plainTextAttributedText("Enter message...")
             textView.textColor = UIColor.white.withAlphaComponent(0.6)
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
             textViewPreferredHeight.constant = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)).height + textView.textContainerInset.top
@@ -254,10 +255,11 @@ extension ViewController: UITextViewDelegate {
         
         state = .text
         
+        textView.attributedText = plainTextAttributedText(text.string)
         textView.textColor = .white
         textViewPreferredHeight.constant = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)).height + textView.textContainerInset.top
         
-        let morse = MorseController.morse(from: text)!
+        let morse = MorseController.morse(from: text.string)!
         morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse))
         morseLabelPreferredHeight.constant = morseLabel.sizeThatFits(CGSize(width: morseLabel.bounds.width, height: .greatestFiniteMagnitude)).height
         
@@ -269,6 +271,13 @@ extension ViewController: UITextViewDelegate {
         paragraphStyle.maximumLineHeight = 36
         paragraphStyle.minimumLineHeight = 36
         return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.customFont(.playfairDisplay, size: 36), NSParagraphStyleAttributeName: paragraphStyle])
+    }
+    
+    private func plainTextAttributedText(_ string: String) -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.maximumLineHeight = 36
+        paragraphStyle.minimumLineHeight = 36
+        return NSAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightLight), NSParagraphStyleAttributeName: paragraphStyle])
     }
     
     fileprivate func stringForTransmitDuration(_ duration: Double) -> String {
