@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gf6-hs-bZg">
-                                <rect key="frame" x="24" y="44" width="272" height="48"/>
+                                <rect key="frame" x="24" y="44" width="272" height="84"/>
                                 <subviews>
                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="••• -- •••" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="ZZo-Je-0nd">
                                         <rect key="frame" x="0.0" y="0.0" width="272" height="48"/>
@@ -40,7 +40,7 @@
                                 <color key="backgroundColor" red="0.074509803921568626" green="0.074509803921568626" blue="0.074509803921568626" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstItem="ZZo-Je-0nd" firstAttribute="top" secondItem="gf6-hs-bZg" secondAttribute="top" id="Ba6-3M-ujv"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="BnE-S9-8rc"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="84" id="BnE-S9-8rc"/>
                                     <constraint firstAttribute="height" priority="997" constant="48" id="IFe-rL-Ylr"/>
                                     <constraint firstAttribute="trailing" secondItem="ZZo-Je-0nd" secondAttribute="trailing" id="Jhs-cS-U7z"/>
                                     <constraint firstItem="ZZo-Je-0nd" firstAttribute="leading" secondItem="gf6-hs-bZg" secondAttribute="leading" id="i90-oy-mmW"/>
@@ -48,7 +48,7 @@
                                 </constraints>
                             </scrollView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iK5-Bq-2sO">
-                                <rect key="frame" x="24" y="92" width="272" height="1"/>
+                                <rect key="frame" x="24" y="128" width="272" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="xxc-XI-F8T"/>
@@ -148,7 +148,7 @@
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MTK-yl-uDy"/>
                             <constraint firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" constant="24" id="aHD-C4-yqv"/>
                             <constraint firstAttribute="bottom" secondItem="vuH-W3-hsL" secondAttribute="bottom" constant="216" id="bI2-pc-4Ca"/>
-                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gf6-hs-bZg" secondAttribute="bottom" constant="12" id="fRK-dp-PMo"/>
+                            <constraint firstItem="QNI-Ss-i3w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gf6-hs-bZg" secondAttribute="bottom" id="fRK-dp-PMo"/>
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" id="nqN-Ws-nIc"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="top" secondItem="QNI-Ss-i3w" secondAttribute="bottom" id="poH-kz-cnl"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
