@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var morseLabel: UILabel!
     @IBOutlet weak var morseScroll: UIScrollView!
     @IBOutlet weak var morseScrollPreferredHeight: NSLayoutConstraint!
-    private var showingMorseFaderAndKeyLine = false
+    private var showingTransmitKeyLine = false
+    @IBOutlet weak var morseScrollKeyline: UIView!
+    private var showingMorseScrollKeyLine = false
     @IBOutlet weak var transmitKeyline: UIView!
     @IBOutlet weak var transmitLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -98,12 +100,12 @@ class ViewController: UIViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let object = object as? UIScrollView, object === morseScroll && (keyPath == "contentSize" || keyPath == "contentOffset") {
             morseScrollPreferredHeight.constant = morseScroll.contentSize.height
-            let showFader = plainTextView.contentSize.height > plainTextView.bounds.height && plainTextView.contentOffset.y < plainTextView.contentSize.height - plainTextView.bounds.height
-            if showFader != showingMorseFaderAndKeyLine {
-                showingMorseFaderAndKeyLine = showFader
-                UIView.animate(withDuration: 0.1) {
-                    self.transmitKeyline.alpha = showFader ? 1 : 0
-                }
+            let showFader = morseScroll.contentSize.height > morseScroll.bounds.height && morseScroll.contentOffset.y < morseScroll.contentSize.height - morseScroll.bounds.height
+            if showFader != showingMorseScrollKeyLine {
+                showingMorseScrollKeyLine = showFader
+                UIView.animate(withDuration: 0.1, delay: 0.0, options: .beginFromCurrentState, animations: { 
+                    self.morseScrollKeyline.alpha = showFader ? 1 : 0
+                }, completion: nil)
             }
         } else if let object = object as? UITextView, object === plainTextView && keyPath == "selectedTextRange" {
             if state == .empty {
@@ -113,11 +115,11 @@ class ViewController: UIViewController {
             }
         } else if let object = object as? UITextView, object === plainTextView && (keyPath == "contentSize" || keyPath == "contentOffset") {
             let showFader = plainTextView.contentSize.height > plainTextView.bounds.height && plainTextView.contentOffset.y < plainTextView.contentSize.height - plainTextView.bounds.height
-            if showFader != showingMorseFaderAndKeyLine {
-                showingMorseFaderAndKeyLine = showFader
-                UIView.animate(withDuration: 0.1) {
+            if showFader != showingTransmitKeyLine {
+                showingTransmitKeyLine = showFader
+                UIView.animate(withDuration: 0.1, delay: 0.0, options: .beginFromCurrentState, animations: {
                     self.transmitKeyline.alpha = showFader ? 1 : 0
-                }
+                }, completion: nil)
             }
         }
     }

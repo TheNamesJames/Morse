@@ -46,6 +46,13 @@
                                     <constraint firstAttribute="bottom" secondItem="ZZo-Je-0nd" secondAttribute="bottom" id="vQE-m6-7BT"/>
                                 </constraints>
                             </scrollView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iK5-Bq-2sO">
+                                <rect key="frame" x="24" y="92" width="272" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="xxc-XI-F8T"/>
+                                </constraints>
+                            </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter message..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QNI-Ss-i3w">
                                 <rect key="frame" x="24" y="244" width="272" height="48"/>
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
@@ -131,6 +138,7 @@
                         <constraints>
                             <constraint firstItem="gf6-hs-bZg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="24" id="6Rj-j4-Bzv"/>
                             <constraint firstItem="gf6-hs-bZg" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="24" id="8sX-0e-KCu"/>
+                            <constraint firstItem="iK5-Bq-2sO" firstAttribute="top" secondItem="gf6-hs-bZg" secondAttribute="bottom" id="9MH-RP-Gzh"/>
                             <constraint firstAttribute="trailing" secondItem="ZZo-Je-0nd" secondAttribute="trailing" constant="24" id="9qS-e8-jvN"/>
                             <constraint firstItem="Ujq-hI-Hs4" firstAttribute="trailing" secondItem="QNI-Ss-i3w" secondAttribute="trailing" id="GvO-Z0-bCq"/>
                             <constraint firstItem="hff-aU-p7R" firstAttribute="leading" secondItem="QNI-Ss-i3w" secondAttribute="leading" id="I9g-vH-dhn"/>
@@ -143,7 +151,9 @@
                             <constraint firstItem="QNI-Ss-i3w" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1/3" id="nqN-Ws-nIc"/>
                             <constraint firstItem="vuH-W3-hsL" firstAttribute="top" secondItem="QNI-Ss-i3w" secondAttribute="bottom" id="poH-kz-cnl"/>
                             <constraint firstAttribute="trailing" secondItem="vuH-W3-hsL" secondAttribute="trailing" id="rRX-RL-o8k"/>
+                            <constraint firstItem="iK5-Bq-2sO" firstAttribute="trailing" secondItem="gf6-hs-bZg" secondAttribute="trailing" id="tzN-5h-iIC"/>
                             <constraint firstItem="ZZo-Je-0nd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="24" id="vXE-dh-PoT"/>
+                            <constraint firstItem="iK5-Bq-2sO" firstAttribute="leading" secondItem="gf6-hs-bZg" secondAttribute="leading" id="wgf-iS-mXQ"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -153,6 +163,7 @@
                         <outlet property="morseLabel" destination="ZZo-Je-0nd" id="0mr-oU-fsK"/>
                         <outlet property="morseLabelPreferredHeight" destination="3LQ-LP-LlU" id="BPM-8a-jx3"/>
                         <outlet property="morseScroll" destination="gf6-hs-bZg" id="7IB-0W-CaW"/>
+                        <outlet property="morseScrollKeyline" destination="iK5-Bq-2sO" id="8rE-Dk-QwS"/>
                         <outlet property="morseScrollPreferredHeight" destination="IFe-rL-Ylr" id="lYB-1K-g1J"/>
                         <outlet property="plainTextView" destination="QNI-Ss-i3w" id="Mpw-EH-3IV"/>
                         <outlet property="textViewPreferredHeight" destination="Fnr-UK-8iV" id="Drh-Jf-jZV"/>
