@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
     @IBOutlet weak var morseLabelPreferredHeight: NSLayoutConstraint!
     @IBOutlet weak var textViewPreferredHeight: NSLayoutConstraint!
+    @IBOutlet var marginConstraints: [NSLayoutConstraint]!
     fileprivate var useFlash: Bool! {
         didSet {
             guard canUseTorch() else {
@@ -87,6 +88,15 @@ class ViewController: UIViewController {
         plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
         
         textViewDidChange(plainTextView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.bounds.width == 320 && marginConstraints[0].constant != 12 {
+            marginConstraints.forEach {
+                $0.constant = 12
+            }
+        }
     }
     
     deinit {
