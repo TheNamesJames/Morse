@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var flashImageView: UIImageView!
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
     @IBOutlet weak var morseLabelPreferredHeight: NSLayoutConstraint!
+    @IBOutlet weak var textViewPreferredHeight: NSLayoutConstraint!
     fileprivate var useFlash: Bool! {
         didSet {
             guard canUseTorch() else {
@@ -79,6 +80,8 @@ class ViewController: UIViewController {
         
         morseScroll.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
         morseScroll.addObserver(self, forKeyPath: "contentOffset", options: [.new], context: nil)
+        plainTextView.addObserver(self, forKeyPath: "contentSize", options: [.new], context: nil)
+        plainTextView.addObserver(self, forKeyPath: "contentOffset", options: [.new], context: nil)
         plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
         
         textViewDidChange(plainTextView)
@@ -87,19 +90,19 @@ class ViewController: UIViewController {
     deinit {
         morseScroll.removeObserver(self, forKeyPath: "contentSize")
         morseScroll.removeObserver(self, forKeyPath: "contentOffset")
+        plainTextView.removeObserver(self, forKeyPath: "contentSize")
+        plainTextView.removeObserver(self, forKeyPath: "contentOffset")
         plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let object = object as? UIScrollView, object === morseScroll && (keyPath == "contentSize" || keyPath == "contentOffset") {
             morseScrollPreferredHeight.constant = morseScroll.contentSize.height
-            
-            let showFader = morseScroll.contentSize.height > morseScroll.bounds.height && morseScroll.contentOffset.y < morseScroll.contentSize.height - morseScroll.bounds.height
+            let showFader = plainTextView.contentSize.height > plainTextView.bounds.height && plainTextView.contentOffset.y < plainTextView.contentSize.height - plainTextView.bounds.height
             if showFader != showingMorseFaderAndKeyLine {
                 showingMorseFaderAndKeyLine = showFader
                 UIView.animate(withDuration: 0.1) {
                     self.transmitKeyline.alpha = showFader ? 1 : 0
-                    self.view.layoutIfNeeded()
                 }
             }
         } else if let object = object as? UITextView, object === plainTextView && keyPath == "selectedTextRange" {
@@ -107,6 +110,14 @@ class ViewController: UIViewController {
                 plainTextView.removeObserver(self, forKeyPath: "selectedTextRange")
                 object.selectedTextRange = object.textRange(from: object.beginningOfDocument, to: object.beginningOfDocument)
                 plainTextView.addObserver(self, forKeyPath: "selectedTextRange", options: [.new], context: nil)
+            }
+        } else if let object = object as? UITextView, object === plainTextView && (keyPath == "contentSize" || keyPath == "contentOffset") {
+            let showFader = plainTextView.contentSize.height > plainTextView.bounds.height && plainTextView.contentOffset.y < plainTextView.contentSize.height - plainTextView.bounds.height
+            if showFader != showingMorseFaderAndKeyLine {
+                showingMorseFaderAndKeyLine = showFader
+                UIView.animate(withDuration: 0.1) {
+                    self.transmitKeyline.alpha = showFader ? 1 : 0
+                }
             }
         }
     }
@@ -232,6 +243,7 @@ extension ViewController: UITextViewDelegate {
             textView.text = "Enter message..."
             textView.textColor = UIColor.white.withAlphaComponent(0.6)
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            textViewPreferredHeight.constant = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)).height + textView.textContainerInset.top
             
             morseLabel.text = nil
             morseLabelPreferredHeight.constant = 0
@@ -243,6 +255,7 @@ extension ViewController: UITextViewDelegate {
         state = .text
         
         textView.textColor = .white
+        textViewPreferredHeight.constant = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)).height + textView.textContainerInset.top
         
         let morse = MorseController.morse(from: text)!
         morseLabel.attributedText = morseCodeAttributedText(MorseController.morseString(from: morse))
